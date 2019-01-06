@@ -3,6 +3,7 @@ let airQual, currentConditions, forecast = {}, weatherAlert, lightningAlert;
 
 const CLIENT_ID = 'V0EhyX4bGWXDkmJunrbk0';
 const CLIENT_SECRET = 'Rn1IRr4nYoNgefL7Y5YZQqX2mPEi4iKIAIlGeOTZ';
+const latlon = [];
 
 const requestAirQuality = () => {
 
@@ -70,7 +71,7 @@ const requestHourly = () => {
 				console.log('Oh no!')
 			} else {
 				forecast.hourly = json;
-				updateForecast();
+				updateForecastHourly();
 			}
 		});
 };
@@ -86,11 +87,13 @@ const requestAlert = () => {
 			if (!json.success) {
 				console.log('Oh no!')
 			} else if (json.response.length !== 0) {
-				weatherAlert = json.response['0'].details;
+					weatherAlert = json.response['0'].details;
+					updateWeatherAlert();
+
 			} else {
-				weatherAlert = null;
+				document.getElementById('weather_alert').style.visibility = 'hidden';
 			}
-			updateWeatherAlert();
+
 		});
 };
 const requestLightning = () => {
@@ -115,7 +118,7 @@ const requestLightning = () => {
 
 const updateCurrent = () => {
 	currentConditions = currentConditions.ob;
-	console.log(currentConditions);
+	// console.log(currentConditions);
 	let statement = currentConditions.windKPH + " Km/h" + " (" + currentConditions.windDir + ") Sky Cover: " + currentConditions.sky + " %";
 	if (currentConditions.windGustKPH === null) {
 		document.getElementById('current_wind_gust').style.visibility = 'hidden'
@@ -133,6 +136,8 @@ const updateCurrent = () => {
 	}
 	document.getElementById('flight').innerHTML = currentConditions.flightRule;
 	document.getElementById('uv').innerHTML = "Solar: " + currentConditions.solradWM2 + "W/m^2";
+	document.getElementById('current_precip').innerHTML = "Precipitation: " +
+		(currentConditions.precipMM !== null ? (currentConditions.precipMM + " mm") : "None");
 };
 const updateForecast = () => {
 	let forecast_heading, temp;
@@ -141,44 +146,45 @@ const updateForecast = () => {
 		temp = forecast.dayNight['0']['minTempC'] + " C";
 		document.getElementById('high_low').innerHTML = "Overnight Low: ";
 	} else {
-		forecast_heading = "Tomorrow's Forecast:";
+		forecast_heading = "Today's Forecast:";
 		temp = forecast.dayNight['0']['maxTempC'] + " C";
-		document.getElementById('high_low').innerHTML = "Tomorrow's High: ";
+		document.getElementById('high_low').innerHTML = "Today's High: ";
 	}
 	document.getElementById('next_forecast').innerHTML = forecast_heading;
 	let cloud = document.getElementById('summary_cloud');
-	document.getElementById('summary_temp').innerHTML = temp;
+	let pop = document.getElementById('summary_pop');
 	let wind = document.getElementById('summary_wind');
 	let wind_max = document.getElementById('summary_wind_max');
-	let air = document.getElementById('summary_air_quality');
+	let precip = document.getElementById('summary_precip');
+	document.getElementById('summary_temp').innerHTML = temp;
 	cloud.innerHTML = forecast.dayNight['0']['weather'];
 	wind.innerHTML = forecast.dayNight['0']['windSpeedMaxKPH'] + " Km/h @ 0m ("
 		+ forecast.dayNight['0']['windDirMax'] + ")";
 	wind_max.innerHTML = forecast.dayNight['0']['windSpeedMax80mKPH'] + " Km/h @ 80m ("
 		+ forecast.dayNight['0']['windDirMax80m'] + ")";
-
-
+	pop.innerHTML = "POP: " + forecast.dayNight['0']['pop'] + "% " + "Cover: " + forecast.dayNight['0']['sky'] + "%";
+	precip.innerHTML = "Precipitation: " + (((forecast.dayNight['0']['precipMM']) === '0') ? (forecast.dayNight['0']['precipMM'] + " mm") : "None");
+};
+const updateForecastHourly = () => {
 
 };
 const updateAirQual = () => {
-	let statement = airQual.category.toLocaleUpperCase() + " (" + airQual.dominant + " @ " + airQual.pollutants[airQualTypes.indexOf(airQual.dominant)]['valueUGM3'] + "g/m^3)";
+	let level = airQual.category.toLocaleUpperCase() + " AQI: " + airQual.aqi;
+	let statement = " (" + airQual.dominant + " @ " + airQual.pollutants[airQualTypes.indexOf(airQual.dominant)]['valueUGM3'] + "g/m^3)";
 	let color = "#" + airQual.color;
 	const airquality = document.getElementById('current_air_quality');
+	const current_aqi = document.getElementById('current_aqi');
 	airquality.innerHTML = statement;
-	airquality.style.color = color;
+	current_aqi.style.color = color;
+	current_aqi.innerHTML = level;
 
 };
 const updateLightning = () => {
-	if (lightningAlert.length === 0) {
+	if (lightningAlert !== null) {
 		document.getElementById('lightning_alert').style.display = 'none';
 	}
 };
 const updateWeatherAlert = () => {
-	// console.log(weatherAlert);
-	if (weatherAlert.length === 0) {
-		document.getElementById('weather_alert').style.display = 'hidden';
-		return;
-	}
 	let weather_alert = document.getElementById('weather_alert');
 	weather_alert.innerHTML = weatherAlert.name;
 	weather_alert.style.color = "#" + weatherAlert.color;
@@ -192,17 +198,75 @@ const sendRequest = () => {
 	requestAirQuality();
 	requestCurrentWeather();
 	requestForecast();
-	requestHourly();
+	// requestHourly();
 	requestAlert();
 	requestLightning();
 };
 
 sendRequest();
 
-const forecastIsDay = () => {
-	document.getElementById('next_forecast').innerHTML = "Tonight's Forecast:";
-};
 
-const forecastIsNight = () => {
+function swipedetect(el, callback){
 
-};
+	var touchsurface = el,
+		swipedir,
+		startX,
+		startY,
+		distX,
+		distY,
+		threshold = 150, //required min distance traveled to be considered swipe
+		restraint = 100, // maximum distance allowed at the same time in perpendicular direction
+		allowedTime = 300, // maximum time allowed to travel that distance
+		elapsedTime,
+		startTime,
+		handleswipe = callback || function(swipedir){};
+
+	touchsurface.addEventListener('touchstart', function(e){
+		var touchobj = e.changedTouches[0];
+		swipedir = 'none';
+		dist = 0;
+		startX = touchobj.pageX;
+		startY = touchobj.pageY;
+		startTime = new Date().getTime(); // record time when finger first makes contact with surface
+		e.preventDefault()
+	}, false);
+
+	touchsurface.addEventListener('touchmove', function(e){
+		e.preventDefault() // prevent scrolling when inside DIV
+	}, false);
+
+	touchsurface.addEventListener('touchend', function(e){
+		var touchobj = e.changedTouches[0];
+		distX = touchobj.pageX - startX; // get horizontal dist traveled by finger while in contact with surface
+		distY = touchobj.pageY - startY; // get vertical dist traveled by finger while in contact with surface
+		elapsedTime = new Date().getTime() - startTime; // get time elapsed
+		if (elapsedTime <= allowedTime){ // first condition for awipe met
+			if (Math.abs(distX) >= threshold && Math.abs(distY) <= restraint){ // 2nd condition for horizontal swipe met
+				swipedir = (distX < 0)? 'left' : 'right' // if dist traveled is negative, it indicates left swipe
+			}
+			else if (Math.abs(distY) >= threshold && Math.abs(distX) <= restraint){ // 2nd condition for vertical swipe met
+				swipedir = (distY < 0)? 'up' : 'down' // if dist traveled is negative, it indicates up swipe
+			}
+		}
+		handleswipe(swipedir);
+		e.preventDefault()
+	}, false)
+}
+
+//USAGE:
+/*
+var el = document.getElementById('someel')
+swipedetect(el, function(swipedir){
+    swipedir contains either "none", "left", "right", "top", or "down"
+    if (swipedir =='left')
+        alert('You just swiped left!')
+})
+*/
+
+const el = document.getElementById('current_weather');
+swipedetect(el, function(swipedir) {
+	if (swipedir === 'down') {
+		sendRequest();
+	}
+
+});

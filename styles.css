@@ -1,11 +1,18 @@
 * {
     font-family: Futura;
+    background-color: lightgrey;
 }
 
 .col p {
     padding: 4px 0;
     margin: 0;
 }
+#alerts {
+    width: 15%;
+    margin: 150px 43% 0 auto;
+}
+
+#alerts p {margin-bottom: 5px}
 
 #temp, #summary_temp {
     font-size: 6rem;
@@ -14,15 +21,6 @@
     margin: 0;
 }
 
-.forecast_summary {
-    width: 40%;
-    margin: 0 auto;
-    height: max-content;
-    border: solid 2px black;
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
-    border-radius: 10px;
-}
 
 .heading {
     width:30%;
@@ -81,7 +79,7 @@
 /*  GRID OF TWO  */
 .span_2_of_2 {
     width: 50%;
-    padding-top: 1em;
+    /*padding-top: 1em;*/
     margin-left: 15px;
 }
 .span_1_of_2 {
