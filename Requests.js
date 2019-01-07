@@ -122,6 +122,7 @@ const requestLightning = () => {
 };
 
 const updateCurrent = () => {
+	// document.getElementById('current_weather').onclick = openRadar;
 	currentConditions = currentConditions.ob;
 	// console.log(currentConditions);
 	let statement;
@@ -227,3 +228,10 @@ function error(err) {
 	sendRequest();
 }
 sendRequest();
+
+const openRadar = () => {
+	aeris.map().layers('flat,radar,counties,admin').center('calgary, ab').zoom(9).size(500, 300).get().then((result) => {
+		// append result image to a DOM target
+		alert(result.image);
+})};
+
