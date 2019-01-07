@@ -97,7 +97,7 @@
 
 @media only screen and (max-width: 5500px) {
     .span_2_of_2, .span_1_of_2 {
-        width: 45%;
+        width: 30%;
         border: solid 1px black;
     }
     .section {
