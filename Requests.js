@@ -220,7 +220,7 @@ const sendRequest = (pos) => {
 	requestLightning();
 };
 
-navigator.geolocation.getCurrentPosition(sendRequest, error, locOptions);
+//navigator.geolocation.getCurrentPosition(sendRequest, error, locOptions);
 function error(err) {
 	console.warn(`ERROR(${err.code}): ${err.message}`);
 	latlon = 't2m2m2';
