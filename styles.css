@@ -78,7 +78,7 @@
 
 /*  GRID OF TWO  */
 .span_2_of_2 {
-    width: 50%;
+    width: 53%%;
     /*padding-top: 1em;*/
     margin-left: 15px;
 }
@@ -97,5 +97,5 @@
 
 @media only screen and (max-width: 480px) {
     .span_2_of_2, .span_1_of_2 { width: 100%; }
-    .section { width: 90%; }
+    .section { width: 95%; }
 }
