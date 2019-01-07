@@ -3,7 +3,7 @@ let airQual, currentConditions, forecast = {}, weatherAlert, lightningAlert;
 
 const CLIENT_ID = 'V0EhyX4bGWXDkmJunrbk0';
 const CLIENT_SECRET = 'Rn1IRr4nYoNgefL7Y5YZQqX2mPEi4iKIAIlGeOTZ';
-let latlon = ['t2m2m2'];
+let latlon = 't2m2m2';
 const locOptions = {
 	enableHighAccuracy: false,
 	timeout: 5000,
@@ -13,7 +13,7 @@ const locOptions = {
 const requestAirQuality = () => {
 
 	const url = 'https://api.aerisapi.com/airquality/' + latlon + '?&format=json&client_id=' + CLIENT_ID + '&client_secret='+ CLIENT_SECRET;
-
+	console.log(url);
 	fetch(url)
 		.then(function (response) {
 			return response.json();
@@ -65,7 +65,7 @@ const requestForecast = () => {
 };
 const requestHourly = () => {
 
-	const url = 'https://api.aerisapi.com/forecasts/' + latlon['0'] + '?&format=json&filter=1hr&limit=14&client_id=' + CLIENT_ID + '&client_secret=' + CLIENT_SECRET;
+	const url = 'https://api.aerisapi.com/forecasts/' + latlon + '?&format=json&filter=1hr&limit=14&client_id=' + CLIENT_ID + '&client_secret=' + CLIENT_SECRET;
 
 	fetch(url)
 		.then(function(response) {
