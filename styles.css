@@ -1,7 +1,13 @@
 * {
-    /*font-family: Dura Sans, Futura, SansSerif, sans-serif;*/
+    font-family: ubuntu, sans-serif;
     background-color: lightgrey;
+    background-color: transparent;
     font-size: 20px;
+    color: #FBA728;
+}
+body {
+    background-image: url('./resources/pexels-photo-417192.jpeg');
+    background-size: auto 1000px;
 }
 
 .col p {
@@ -37,6 +43,8 @@
     clear: both;
     padding: 0;
     margin: 0 auto;
+
+    background-color: #243D4D77;
 }
 .section:first-child {
     margin-top: 50px;
@@ -51,12 +59,14 @@
 #flight {
     float: right;
     margin-right: 10px;
+    padding: 5px;
+    border-radius: 10px;
 }
 #uv {
-    float: left;
+    float: right;
     text-align: center;
     font-size: 0.7em;
-    padding-left: 10px;
+    padding-right: 10px;
 }
 
 /*  COLUMN SETUP  */
@@ -105,8 +115,10 @@ footer {
         font-size: small;
     }
     .section {
-        width:90%;
+        width:70%;
     }
+    .span_1_of_2 {width:30%}
+    .span_2_of_2 {width:40%}
 }
 
 @media only screen and (min-width: 500px) and (max-width: 850px) {

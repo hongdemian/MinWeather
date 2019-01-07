@@ -145,8 +145,9 @@ const updateCurrent = () => {
 	document.getElementById('current_temp').innerHTML = "Feels like: " + currentConditions.feelslikeC + " C";
 	document.getElementById('current_humidity').innerHTML = "Humidity: " + currentConditions.humidity + " % (Dewpoint: " + currentConditions.dewpointC + " C)";
 	flightRule = currentConditions.flightRule;
+	document.getElementById('flight').style.backgroundColor = 'green';
 	if (flightRule != 'VFR') {
-		document.getElementById('flight').style.color = 'red'
+		document.getElementById('flight').style.backgroundColor = 'red'
 	}
 	document.getElementById('flight').innerHTML = currentConditions.flightRule;
 	document.getElementById('uv').innerHTML = "Solar: " + currentConditions.solradWM2 + "W/m^2";
@@ -161,7 +162,7 @@ const updateForecast = () => {
 		temp = forecast.dayNight['0']['minTempC'] + " C";
 		forecast_temp = forecast.dayNight['1']['maxTempC'] + " C";
 		document.getElementById('high_low').innerHTML = "Overnight Low: ";
-		docuemnt.getElementById('second_high_low').innerHTML = "Tomorrow's High:"
+		document.getElementById('second_high_low').innerHTML = "Tomorrow's High:"
 	} else {
 		forecast_heading = "Today's Forecast:";
 		second_forecast = "Tonight's Forecast:";
