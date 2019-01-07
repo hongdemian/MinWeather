@@ -5,7 +5,7 @@
 }
 body {
     background-image: url('./resources/pexels-photo-417192.jpeg');
-    background-size: auto 1000px;
+    /*background-size: auto 1000px;*/
     background-position: center center;
     background-attachment: fixed;
 }
