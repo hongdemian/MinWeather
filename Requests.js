@@ -226,3 +226,4 @@ function error(err) {
 	latlon = 't2m2m2';
 	sendRequest();
 }
+sendRequest();
