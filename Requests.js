@@ -3,11 +3,16 @@ let airQual, currentConditions, forecast = {}, weatherAlert, lightningAlert;
 
 const CLIENT_ID = 'V0EhyX4bGWXDkmJunrbk0';
 const CLIENT_SECRET = 'Rn1IRr4nYoNgefL7Y5YZQqX2mPEi4iKIAIlGeOTZ';
-const latlon = [];
+let latlon = ['t2m2m2'];
+const locOptions = {
+	enableHighAccuracy: false,
+	timeout: 5000,
+	maximumAge: 0
+};
 
 const requestAirQuality = () => {
 
-	const url = 'https://api.aerisapi.com/airquality/T2m2m2?&format=json&client_id=' + CLIENT_ID + '&client_secret='+ CLIENT_SECRET;
+	const url = 'https://api.aerisapi.com/airquality/' + latlon + '?&format=json&client_id=' + CLIENT_ID + '&client_secret='+ CLIENT_SECRET;
 
 	fetch(url)
 		.then(function (response) {
@@ -25,7 +30,7 @@ const requestAirQuality = () => {
 };
 const requestCurrentWeather = () => {
 
-	const url = 'https://api.aerisapi.com/observations/T2m2m2?&format=json&filter=allstations&limit=1&client_id=' + CLIENT_ID + '&client_secret='+ CLIENT_SECRET;
+	const url = 'https://api.aerisapi.com/observations/' + latlon + '?&format=json&filter=allstations&limit=1&client_id=' + CLIENT_ID + '&client_secret='+ CLIENT_SECRET;
 
 	fetch(url)
 		.then(function(response) {
@@ -42,7 +47,7 @@ const requestCurrentWeather = () => {
 };
 const requestForecast = () => {
 
-	const url = 'https://api.aerisapi.com/forecasts/t2m2m2?&format=json&filter=daynight&limit=14&client_id=' + CLIENT_ID + '&client_secret='+ CLIENT_SECRET;
+	const url = 'https://api.aerisapi.com/forecasts/' + latlon + '?&format=json&filter=daynight&limit=14&client_id=' + CLIENT_ID + '&client_secret='+ CLIENT_SECRET;
 
 	fetch(url)
 		.then(function(response) {
@@ -60,7 +65,7 @@ const requestForecast = () => {
 };
 const requestHourly = () => {
 
-	const url = 'https://api.aerisapi.com/forecasts/T2m2m2?&format=json&filter=1hr&limit=14&client_id=' + CLIENT_ID + '&client_secret=' + CLIENT_SECRET;
+	const url = 'https://api.aerisapi.com/forecasts/' + latlon['0'] + '?&format=json&filter=1hr&limit=14&client_id=' + CLIENT_ID + '&client_secret=' + CLIENT_SECRET;
 
 	fetch(url)
 		.then(function(response) {
@@ -77,7 +82,7 @@ const requestHourly = () => {
 };
 const requestAlert = () => {
 
-	const url = 'https://api.aerisapi.com/alerts/t2m2m2?&format=json&limit=10&fields=details.name,loc,details.color,details.body,details.bodyFull,timestamps.beginsISO,timestamps.expiresISO&client_id=' + CLIENT_ID + '&client_secret='+ CLIENT_SECRET;
+	const url = 'https://api.aerisapi.com/alerts/' + latlon + '?&format=json&limit=10&fields=details.name,loc,details.color,details.body,details.bodyFull,timestamps.beginsISO,timestamps.expiresISO&client_id=' + CLIENT_ID + '&client_secret='+ CLIENT_SECRET;
 
 	fetch(url)
 		.then(function(response) {
@@ -98,7 +103,7 @@ const requestAlert = () => {
 };
 const requestLightning = () => {
 
-	const url = 'https://api.aerisapi.com/lightning/t2m2m2?&format=json&radius=25mi&filter=cg&limit=1&fields=id,ob,loc,recISO&client_id=' + CLIENT_ID + '&client_secret=' + CLIENT_SECRET;
+	const url = 'https://api.aerisapi.com/lightning/' + latlon+ '?&format=json&radius=25mi&filter=cg&limit=1&fields=id,ob,loc,recISO&client_id=' + CLIENT_ID + '&client_secret=' + CLIENT_SECRET;
 
 	fetch(url)
 		.then(function(response) {
@@ -119,7 +124,13 @@ const requestLightning = () => {
 const updateCurrent = () => {
 	currentConditions = currentConditions.ob;
 	// console.log(currentConditions);
-	let statement = currentConditions.windKPH + " Km/h" + " (" + currentConditions.windDir + ") Sky Cover: " + currentConditions.sky + " %";
+	let statement;
+	if (currentConditions.windKPH < 4) {
+		statement = "Wind Calm - Sky Cover: " + currentConditions.sky + " %";
+	} else {
+		statement = currentConditions.windKPH + " Km/h" + " (" + currentConditions.windDir + ") Sky Cover: " +
+			currentConditions.sky + " %";
+	}
 	if (currentConditions.windGustKPH === null) {
 		document.getElementById('current_wind_gust').style.visibility = 'hidden'
 	}
@@ -194,7 +205,13 @@ const updateWeatherAlert = () => {
 	}
 };
 
-const sendRequest = () => {
+const sendRequest = (pos) => {
+	latlon = 't2m2m2';
+	if (pos) {
+		console.log(pos);
+		latlon = [pos.coords.latitude, pos.coords.longitude];
+		console.log(latlon);
+	}
 	requestAirQuality();
 	requestCurrentWeather();
 	requestForecast();
@@ -203,70 +220,9 @@ const sendRequest = () => {
 	requestLightning();
 };
 
-sendRequest();
-
-
-function swipedetect(el, callback){
-
-	var touchsurface = el,
-		swipedir,
-		startX,
-		startY,
-		distX,
-		distY,
-		threshold = 150, //required min distance traveled to be considered swipe
-		restraint = 100, // maximum distance allowed at the same time in perpendicular direction
-		allowedTime = 300, // maximum time allowed to travel that distance
-		elapsedTime,
-		startTime,
-		handleswipe = callback || function(swipedir){};
-
-	touchsurface.addEventListener('touchstart', function(e){
-		var touchobj = e.changedTouches[0];
-		swipedir = 'none';
-		dist = 0;
-		startX = touchobj.pageX;
-		startY = touchobj.pageY;
-		startTime = new Date().getTime(); // record time when finger first makes contact with surface
-		e.preventDefault()
-	}, false);
-
-	touchsurface.addEventListener('touchmove', function(e){
-		e.preventDefault() // prevent scrolling when inside DIV
-	}, false);
-
-	touchsurface.addEventListener('touchend', function(e){
-		var touchobj = e.changedTouches[0];
-		distX = touchobj.pageX - startX; // get horizontal dist traveled by finger while in contact with surface
-		distY = touchobj.pageY - startY; // get vertical dist traveled by finger while in contact with surface
-		elapsedTime = new Date().getTime() - startTime; // get time elapsed
-		if (elapsedTime <= allowedTime){ // first condition for awipe met
-			if (Math.abs(distX) >= threshold && Math.abs(distY) <= restraint){ // 2nd condition for horizontal swipe met
-				swipedir = (distX < 0)? 'left' : 'right' // if dist traveled is negative, it indicates left swipe
-			}
-			else if (Math.abs(distY) >= threshold && Math.abs(distX) <= restraint){ // 2nd condition for vertical swipe met
-				swipedir = (distY < 0)? 'up' : 'down' // if dist traveled is negative, it indicates up swipe
-			}
-		}
-		handleswipe(swipedir);
-		e.preventDefault()
-	}, false)
+navigator.geolocation.getCurrentPosition(sendRequest, error, locOptions);
+function error(err) {
+	console.warn(`ERROR(${err.code}): ${err.message}`);
+	latlon = 't2m2m2';
+	sendRequest();
 }
-
-//USAGE:
-/*
-var el = document.getElementById('someel')
-swipedetect(el, function(swipedir){
-    swipedir contains either "none", "left", "right", "top", or "down"
-    if (swipedir =='left')
-        alert('You just swiped left!')
-})
-*/
-
-const el = document.getElementById('current_weather');
-swipedetect(el, function(swipedir) {
-	if (swipedir === 'down') {
-		sendRequest();
-	}
-
-});

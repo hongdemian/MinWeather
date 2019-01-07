@@ -15,7 +15,7 @@
 #alerts p {margin-bottom: 5px}
 
 #temp, #summary_temp {
-    font-size: 6rem;
+    font-size: 5rem;
     font-style: italic;
     padding: 0;
     margin: 0;
@@ -30,7 +30,7 @@
 }
 /*  SECTIONS  */
 .section {
-    width: 45%;
+    width: 50%;
     height: max-content;
     /*border: solid 2px black;*/
     clear: both;
