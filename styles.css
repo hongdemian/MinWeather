@@ -1,13 +1,13 @@
 * {
     font-family: ubuntu, sans-serif;
-    background-color: lightgrey;
-    background-color: transparent;
     font-size: 20px;
     color: #FBA728;
 }
 body {
     background-image: url('./resources/pexels-photo-417192.jpeg');
     background-size: auto 1000px;
+    background-position: center center;
+    background-attachment: fixed;
 }
 
 .col p {
