@@ -13,7 +13,7 @@ const locOptions = {
 const requestAirQuality = () => {
 
 	const url = 'https://api.aerisapi.com/airquality/' + latlon + '?&format=json&client_id=' + CLIENT_ID + '&client_secret='+ CLIENT_SECRET;
-	console.log(url);
+	//console.log(url);
 	fetch(url)
 		.then(function (response) {
 			return response.json();
@@ -132,10 +132,12 @@ const updateCurrent = () => {
 		statement = currentConditions.windKPH + " Km/h" + " (" + currentConditions.windDir + ") Sky Cover: " +
 			currentConditions.sky + " %";
 	}
+	console.log("wind: " + currentConditions.windGustKPH);
 	if (currentConditions.windGustKPH === null) {
-		document.getElementById('current_wind_gust').style.visibility = 'hidden'
+		document.getElementById('current_wind_gust').style.display = 'none';
 	}
 	let gusts = currentConditions.windGustKPH + " Km/h" + " (" + currentConditions.windGustSpeedKPH + " Km/h)";
+
 	document.getElementById('current_cloud').innerHTML = currentConditions.weather;
 	document.getElementById('current_wind').innerHTML = statement;
 	document.getElementById('current_wind_gust').innerHTML = gusts;
@@ -152,17 +154,24 @@ const updateCurrent = () => {
 		(currentConditions.precipMM !== null ? (currentConditions.precipMM + " mm") : "None");
 };
 const updateForecast = () => {
-	let forecast_heading, temp;
+	let forecast_heading, temp, second_forecast, second_high_low, forecast_temp;
 	if (!forecast.dayNight['0']['isDay']) {
 		forecast_heading = "Tonight's Forecast:";
+		second_forecast = "Tomorrow's Forecast:";
 		temp = forecast.dayNight['0']['minTempC'] + " C";
+		forecast_temp = forecast.dayNight['1']['maxTempC'] + " C";
 		document.getElementById('high_low').innerHTML = "Overnight Low: ";
+		docuemnt.getElementById('second_high_low').innerHTML = "Tomorrow's High:"
 	} else {
 		forecast_heading = "Today's Forecast:";
+		second_forecast = "Tonight's Forecast:";
 		temp = forecast.dayNight['0']['maxTempC'] + " C";
+		forecast_temp = forecast.dayNight['1']['minTempC'] + " C";
 		document.getElementById('high_low').innerHTML = "Today's High: ";
+		document.getElementById('second_high_low').innerHTML = "Tonight's Low:"
 	}
 	document.getElementById('next_forecast').innerHTML = forecast_heading;
+	document.getElementById('second_forecast').innerHTML = second_forecast;
 	let cloud = document.getElementById('summary_cloud');
 	let pop = document.getElementById('summary_pop');
 	let wind = document.getElementById('summary_wind');
@@ -176,6 +185,22 @@ const updateForecast = () => {
 		+ forecast.dayNight['0']['windDirMax80m'] + ")";
 	pop.innerHTML = "POP: " + forecast.dayNight['0']['pop'] + "% " + "Cover: " + forecast.dayNight['0']['sky'] + "%";
 	precip.innerHTML = "Precipitation: " + (((forecast.dayNight['0']['precipMM']) === '0') ? (forecast.dayNight['0']['precipMM'] + " mm") : "None");
+	//second period
+	document.getElementById('forecast_temp').innerHTML = forecast_temp;
+	let forecast_cloud = document.getElementById('forecast_cloud');
+	let forecast_pop = document.getElementById('forecast_pop');
+	let forecast_wind = document.getElementById('forecast_wind');
+	let forecast_wind_max = document.getElementById('forecast_wind_max');
+	let forecast_precip = document.getElementById('forecast_precip');
+	forecast_cloud.innerhtml = forecast.dayNight['1']['weather'];
+	forecast_wind.innerHTML = forecast.dayNight['1']['windSpeedMaxKPH'] + " Km/h @ 0m ("
+		+ forecast.dayNight['1']['windDirMax'] + ")";
+	forecast_wind_max.innerHTML = forecast.dayNight['1']['windSpeedMax80mKPH'] + " Km/h @ 80m ("
+		+ forecast.dayNight['1']['windDirMax80m'] + ")";
+	forecast_pop.innerHTML = "POP: " + forecast.dayNight['1']['pop'] + "% " + "Cover: " + forecast.dayNight['1']['sky'] + "%";
+	forecast_precip.innerHTML = "Precipitation: " + (((forecast.dayNight['1']['precipMM']) === '0') ? (forecast.dayNight['1']['precipMM'] + " mm") : "None");
+
+
 };
 const updateForecastHourly = () => {
 
