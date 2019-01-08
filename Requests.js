@@ -1,5 +1,5 @@
 
-let airQual, currentConditions, forecast = {}, weatherAlert, lightningAlert;
+let airQual, currentConditions, forecast = {}, weatherAlert, lightningAlert, airQualForecast = [];
 
 const CLIENT_ID = 'V0EhyX4bGWXDkmJunrbk0';
 const CLIENT_SECRET = 'Rn1IRr4nYoNgefL7Y5YZQqX2mPEi4iKIAIlGeOTZ';
@@ -12,7 +12,8 @@ const locOptions = {
 
 const requestAirQuality = () => {
 
-	const url = 'https://api.aerisapi.com/airquality/' + latlon + '?&format=json&client_id=' + CLIENT_ID + '&client_secret='+ CLIENT_SECRET;
+	const url = 'https://api.aerisapi.com/airquality/' + latlon + '?&format=json&client_id=' +
+		CLIENT_ID + '&client_secret='+ CLIENT_SECRET;
 	//console.log(url);
 	fetch(url)
 		.then(function (response) {
@@ -27,7 +28,24 @@ const requestAirQuality = () => {
 				updateAirQual();
 			}
 		});
+
+	const AQF = 'https://api.aerisapi.com/airquality/forecasts/' + latlon + '?client_id=' + CLIENT_ID + '&client_secret=' + CLIENT_SECRET;
+
+	fetch(AQF)
+		.then(function (response) {
+			return response.json();
+		})
+		.then(function (json) {
+			if (!json.success) {
+				console.lot('Oh no!')
+			} else {
+				airQualForecast = json.response['0']['periods'];
+				console.log(airQualForecast);
+				updateAirQual();
+			}
+		});
 };
+
 const requestCurrentWeather = () => {
 
 	const url = 'https://api.aerisapi.com/observations/' + latlon + '?&format=json&filter=allstations&limit=1&client_id=' + CLIENT_ID + '&client_secret='+ CLIENT_SECRET;
@@ -215,6 +233,28 @@ const updateAirQual = () => {
 	airquality.innerHTML = statement;
 	current_aqi.style.color = color;
 	current_aqi.innerHTML = level;
+	// forecasts
+	if (airQualForecast.length > 0) {
+		let summary_level = airQualForecast['1'].category.toLocaleUpperCase() + " AQI: " + airQualForecast['1'].aqi;
+		let summary_statement = " (" + airQual.dominant + " @ " +
+			airQualForecast['1'].pollutants[airQualTypes.indexOf(airQualForecast['1'].dominant)]['valueUGM3'] + "g/m^3)";
+		let summary_color = "#" + airQualForecast['1'].color;
+		const summary_airquality = document.getElementById('summary_air_quality');
+		const summary_aqi = document.getElementById('summary_aqi');
+		summary_airquality.innerHTML = summary_statement;
+		summary_aqi.style.color = summary_color;
+		summary_aqi.innerHTML = summary_level;
+		//next forecast
+		let forecast_level = airQualForecast['2'].category.toLocaleUpperCase() + " AQI: " + airQualForecast['2'].aqi;
+		let forecast_statement = " (" + airQual.dominant + " @ " +
+			airQualForecast['2'].pollutants[airQualTypes.indexOf(airQualForecast['2'].dominant)]['valueUGM3'] + "g/m^3)";
+		let forecast_color = "#" + airQualForecast['2'].color;
+		const forecast_airquality = document.getElementById('forecast_air_quality');
+		const forecast_aqi = document.getElementById('forecast_aqi');
+		forecast_airquality.innerHTML = forecast_statement;
+		forecast_aqi.style.color = forecast_color;
+		forecast_aqi.innerHTML = forecast_level;
+	}
 
 };
 const updateLightning = () => {
@@ -247,13 +287,13 @@ const sendRequest = (pos) => {
 	requestLightning();
 };
 
-navigator.geolocation.getCurrentPosition(sendRequest, error, locOptions);
+// navigator.geolocation.getCurrentPosition(sendRequest, error, locOptions);
 function error(err) {
 	console.warn(`ERROR(${err.code}): ${err.message}`);
 	latlon = 't2m2m2';
 	sendRequest();
 }
-// sendRequest();
+sendRequest();
 
 const openRadar = () => {
 	aeris.map().layers('flat,radar,counties,admin').center('calgary, ab').zoom(9).size(500, 300).get().then((result) => {
