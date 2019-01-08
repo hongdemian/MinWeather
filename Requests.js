@@ -40,7 +40,7 @@ const requestAirQuality = () => {
 				console.lot('Oh no!')
 			} else {
 				airQualForecast = json.response['0']['periods'];
-				console.log(airQualForecast);
+				// console.log(airQualForecast);
 				updateAirQual();
 			}
 		});
@@ -48,7 +48,7 @@ const requestAirQuality = () => {
 
 const requestCurrentWeather = () => {
 
-	const url = 'https://api.aerisapi.com/observations/' + latlon + '?&format=json&filter=allstations&limit=1&client_id=' + CLIENT_ID + '&client_secret='+ CLIENT_SECRET;
+	const url = 'https://api.aerisapi.com/observations/' + latlon + '?&format=json&filter=metars&limit=1&client_id=' + CLIENT_ID + '&client_secret='+ CLIENT_SECRET;
 
 	fetch(url)
 		.then(function(response) {
@@ -76,7 +76,7 @@ const requestForecast = () => {
 				console.log('Oh no!')
 			} else {
 				forecast.dayNight = json.response['0']['periods'];
-				console.log(forecast);
+				// console.log(forecast);
 				updateForecast();
 			}
 		});
@@ -140,9 +140,12 @@ const requestLightning = () => {
 };
 
 const updateCurrent = () => {
+	console.log(currentConditions);
+	let place = ((currentConditions.place['name'])) + ", " + ((currentConditions.place['state'])) + " (" + currentConditions.profile.elevM + " m)";
+	// console.log(place.toLocaleUpperCase());
+	document.getElementById('place_name').innerHTML = place.toLocaleUpperCase();
 	// document.getElementById('current_weather').onclick = openRadar;
 	currentConditions = currentConditions.ob;
-	// console.log(currentConditions);
 	let statement;
 	if (currentConditions.windKPH < 4) {
 		statement = "Wind Calm - Sky Cover: " + currentConditions.sky + " %";
@@ -150,7 +153,7 @@ const updateCurrent = () => {
 		statement = currentConditions.windKPH + " Km/h" + " (" + currentConditions.windDir + ") Sky Cover: " +
 			currentConditions.sky + " %";
 	}
-	console.log("wind: " + currentConditions.windGustKPH);
+	// console.log("wind: " + currentConditions.windGustKPH);
 	if (currentConditions.windGustKPH === null) {
 		document.getElementById('current_wind_gust').style.display = 'none';
 	}
@@ -275,9 +278,9 @@ const updateWeatherAlert = () => {
 const sendRequest = (pos) => {
 	latlon = 't2m2m2';
 	if (pos) {
-		console.log(pos);
+		// console.log(pos);
 		latlon = [pos.coords.latitude, pos.coords.longitude];
-		console.log(latlon);
+		// console.log(latlon);
 	}
 	requestAirQuality();
 	requestCurrentWeather();
@@ -295,7 +298,7 @@ function error(err) {
 }
 //sendRequest();
 
-const openRadar = () => {
+ openRadar = () => {
 	aeris.map().layers('flat,radar,counties,admin').center('calgary, ab').zoom(9).size(500, 300).get().then((result) => {
 		// append result image to a DOM target
 		alert(result.image);
