@@ -277,7 +277,7 @@ $(document).ready(function() {
 		$('.hidden').each( function(i){
 
 			let bottom_of_object = $(this).position().top + $(this).outerHeight();
-			let bottom_of_window = $(window).scrollTop() + $(window).height() - 50;
+			let bottom_of_window = $(window).scrollTop() + $(window).height() - 10;
 
 			/* If the object is completely visible in the window, fade it it */
 			if( (bottom_of_window) > bottom_of_object ){
