@@ -247,13 +247,13 @@ const sendRequest = (pos) => {
 	requestLightning();
 };
 
-//navigator.geolocation.getCurrentPosition(sendRequest, error, locOptions);
+navigator.geolocation.getCurrentPosition(sendRequest, error, locOptions);
 function error(err) {
 	console.warn(`ERROR(${err.code}): ${err.message}`);
 	latlon = 't2m2m2';
 	sendRequest();
 }
-sendRequest();
+// sendRequest();
 
 const openRadar = () => {
 	aeris.map().layers('flat,radar,counties,admin').center('calgary, ab').zoom(9).size(500, 300).get().then((result) => {
