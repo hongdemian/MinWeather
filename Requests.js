@@ -282,7 +282,7 @@ $(document).ready(function() {
 			/* If the object is completely visible in the window, fade it it */
 			if( (bottom_of_window -50) > bottom_of_object ){
 
-				$(this).animate({'opacity':'1'},1500);
+				$(this).animate({'opacity':'1'},500);
 
 			} else {
 				$(this).animate({'opacity':'0'},500);
