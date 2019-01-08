@@ -12,6 +12,10 @@ body {
     background-repeat: no-repeat;
 }
 
+.hidden {
+    opacity: 0;
+}
+
 .col p {
     padding: 4px 0;
     margin: 0;
