@@ -115,7 +115,7 @@ const requestAlert = () => {
 
 			} else {
 				document.getElementById('weather_alert').style.visibility = 'hidden';
-				document.getElementById(('alerts')).style.backgroundColor = 'none';
+				document.getElementById(('alerts')).style.backgroundColor = 'initial';
 			}
 
 		});
