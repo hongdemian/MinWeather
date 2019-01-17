@@ -115,6 +115,7 @@ const requestAlert = () => {
 
 			} else {
 				document.getElementById('weather_alert').style.visibility = 'hidden';
+				document.getElementById(('alerts')).style.visibility = 'hidden';
 			}
 
 		});
