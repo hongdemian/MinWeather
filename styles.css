@@ -145,6 +145,9 @@ footer {
     }
     .span_1_of_2 {width: 40%}
 }
+    #alerts {
+        width: 70%;
+    }
 /*  GO FULL WIDTH AT LESS THAN 480 PIXELS */
 
 @media only screen and (max-width: 800px) {
@@ -164,6 +167,7 @@ footer {
     #uv {float:left}
     #flight {float:right}
     #temp {clear: both}
+    #alerts {width: 80%}
     .section {
         width: 98%;
         /*margin: 0 auto;*/
