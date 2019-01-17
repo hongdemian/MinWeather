@@ -30,8 +30,11 @@ body {
     margin: 0;
 }
 #alerts {
+    padding 3px;
+    text-align: center;
     width: 15%;
     margin: 15px auto 0 auto;
+    background-color: #243D4D77;
 }
 
 #alerts p {margin-bottom: 5px}

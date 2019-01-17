@@ -1,0 +1,5 @@
+
+exports = {
+	CLIENT_ID : 'V0EhyX4bGWXDkmJunrbk0',
+	CLIENT_SECRET : 'Rn1IRr4nYoNgefL7Y5YZQqX2mPEi4iKIAIlGeOTZ'
+};
