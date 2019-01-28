@@ -177,7 +177,7 @@ footer {
     #alerts {width: 80%}
     .section, .place {
         width: 93%;
-        /*margin: 0 auto;*/
+        margin: 0 auto;
     }
 
     .hidden { opacity: 1 }
