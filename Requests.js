@@ -1,6 +1,3 @@
-// import api from './js/api.js';
-
-// console.log(api);
 
 let airQual, currentConditions, forecast = {}, weatherAlert, lightningAlert, airQualForecast, airQualTypes = [];
 // console.log("api " + api);
@@ -307,8 +304,6 @@ function error(err) {
 		// append result image to a DOM target
 		alert(result.image);
 })};
-
-
 
 //fade elements
 $(function(){  // $(document).ready shorthand

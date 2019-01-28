@@ -175,4 +175,6 @@ footer {
         width: 93%;
         /*margin: 0 auto;*/
     }
+
+    .hidden { opacity: 1 }
 }
