@@ -247,6 +247,9 @@ const updateAirQual = () => {
 };
 const updateAirQualForecast = () => {
 	let summary_level = airQualForecast['1'].category.toLocaleUpperCase() + " AQI: " + airQualForecast['1'].aqi;
+	const def = airQualForecast['1'].pollutants[airQualTypes.indexOf(airQualForecast['1'].dominant)];
+	if (def === undefined) { return; }
+	console.log(airQualForecast['1'].pollutants[airQualTypes.indexOf(airQualForecast['1'].dominant)]);
 	let summary_statement = " ( " + airQualForecast['1'].dominant + " @ " +
 		airQualForecast['1'].pollutants[airQualTypes.indexOf(airQualForecast['1'].dominant)]['valueUGM3'] + "g/m^3)";
 	let summary_color = "#" + airQualForecast['1'].color;
@@ -336,28 +339,28 @@ $(function(){  // $(document).ready shorthand
 	$('.main').fadeIn('slow');
 });
 
-$(document).ready(function() {
-
-	/* Every time the window is scrolled ... */
-	$(window).scroll( function(){
-
-		/* Check the request_location of each desired element */
-		$('.hidden').each( function(i){
-
-			let bottom_of_object = $(this).position().top + $(this).outerHeight();
-			let bottom_of_window = $(window).scrollTop() + $(window).height();
-
-			/* If the object is completely visible in the window, fade it it */
-			if( (bottom_of_window) > bottom_of_object ){
-
-				$(this).animate({'opacity':'1'},500);
-
-			} else {
-				$(this).animate({'opacity':'.5'},500);
-			}
-
-		});
-
-	});
-
-});
+// $(document).ready(function() {
+//
+// 	/* Every time the window is scrolled ... */
+// 	$(window).scroll( function(){
+//
+// 		/* Check the request_location of each desired element */
+// 		$('.hidden').each( function(i){
+//
+// 			let bottom_of_object = $(this).position().top + $(this).outerHeight();
+// 			let bottom_of_window = $(window).scrollTop() + $(window).height();
+//
+// 			/* If the object is completely visible in the window, fade it it */
+// 			if( (bottom_of_window) > bottom_of_object ){
+//
+// 				$(this).animate({'opacity':'1'},500);
+//
+// 			} else {
+// 				$(this).animate({'opacity':'.5'},500);
+// 			}
+//
+// 		});
+//
+// 	});
+//
+// });

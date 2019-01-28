@@ -14,11 +14,10 @@ body {
 .place {
 	background-color: #243D4D77;
 }
-#place_name {
-    background-color: #243D4D77;
+#place_name, .place {
     text-align: center;
     width: 50%;
-    margin: 5% auto 0;
+    margin: 0 auto;
     padding: 4px 0;
 }
 
@@ -135,7 +134,7 @@ footer {
     }
 
 	#summary_air_quality, #forecast_air_quality, #current_air_quality {display: none;}
-    .section {
+    .section, .place {
         width:70%;
     }
     .span_1_of_2 {width:30%}
