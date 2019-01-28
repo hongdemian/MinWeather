@@ -67,8 +67,8 @@ body {
     margin-top: 0;
 
 }
-#current_cloud, #summary_cloud {
-    font-size: 1.2em;
+#current_cloud, #summary_cloud, #forecast_cloud{
+    font-size: 1.3em;
     font-weight: bolder;
 }
 #weather_alert {text-align: center}
@@ -131,6 +131,7 @@ footer {
     * {
         font-size: small;
     }
+
 	#summary_air_quality, #forecast_air_quality, #current_air_quality {display: none;}
     .section {
         width:70%;

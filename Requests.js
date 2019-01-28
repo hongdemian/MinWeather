@@ -29,7 +29,6 @@ const requestAirQuality = () => {
 		})
 		.catch(err => {console.log(err)});
 };
-
 const requestAirQualForecast = () => {
 	const AQF = 'https://api.aerisapi.com/airquality/forecasts/' + request_location + '?client_id=' + CLIENT_ID + '&client_secret=' + CLIENT_SECRET;
 
@@ -216,7 +215,7 @@ const updateForecast = () => {
 	let forecast_wind = document.getElementById('forecast_wind');
 	let forecast_wind_max = document.getElementById('forecast_wind_max');
 	let forecast_precip = document.getElementById('forecast_precip');
-	forecast_cloud.innerhtml = forecast.dayNight['1']['weather'];
+	forecast_cloud.innerHTML = forecast.dayNight['1']['weather'];
 	forecast_wind.innerHTML = forecast.dayNight['1']['windSpeedMaxKPH'] + " Km/h @ 0m ("
 		+ forecast.dayNight['1']['windDirMax'] + ")";
 	forecast_wind_max.innerHTML = forecast.dayNight['1']['windSpeedMax80mKPH'] + " Km/h @ 80m ("
