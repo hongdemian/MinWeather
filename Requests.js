@@ -278,7 +278,7 @@ const updateAirQualForecast = () => {
 
 };
 const updateLightning = () => {
-	if (lightningAlert !== null) {
+	if (!lightningAlert) {
 		document.getElementById('lightning_alert').style.display = 'none';
 	}
 };
