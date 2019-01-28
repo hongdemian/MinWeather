@@ -335,9 +335,9 @@ function error(err) {
 })};
 
 //fade elements
-$(function(){  // $(document).ready shorthand
-	$('.main').fadeIn('slow');
-});
+// $(function(){  // $(document).ready shorthand
+// 	$('.main').fadeIn('slow');
+// });
 
 // $(document).ready(function() {
 //
