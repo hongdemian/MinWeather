@@ -163,7 +163,7 @@ footer {
 }
 
 @media only screen and (max-width: 500px) {
-    .span_2_of_2, .span_1_of_2, #alerts {
+    .span_2_of_2, .span_1_of_2, #alerts, #place_name {
         width: 75%;
         text-align: center;
         /*border: solid 1px black;*/
