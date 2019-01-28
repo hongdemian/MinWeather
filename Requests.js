@@ -1,6 +1,9 @@
+// import api from './js/api.js';
 
-let airQual, currentConditions, forecast = {}, weatherAlert, lightningAlert, airQualForecast = [];
+// console.log(api);
 
+let airQual, currentConditions, forecast = {}, weatherAlert, lightningAlert, airQualForecast, airQualTypes = [];
+// console.log("api " + api);
 const CLIENT_ID = 'V0EhyX4bGWXDkmJunrbk0';
 const CLIENT_SECRET = 'Rn1IRr4nYoNgefL7Y5YZQqX2mPEi4iKIAIlGeOTZ';
 let latlon = 't2m2m2';

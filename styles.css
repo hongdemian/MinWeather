@@ -146,7 +146,7 @@ footer {
     .span_1_of_2 {width: 40%}
 }
     #alerts {
-        width: 70%;
+        width:93%;
     }
 /*  GO FULL WIDTH AT LESS THAN 480 PIXELS */
 
@@ -155,11 +155,14 @@ footer {
         margin: 1% auto 1% auto;
         float: unset;
     }
+	.line {
+		display: none;
+	}
 }
 
 @media only screen and (max-width: 800px) {
     .span_2_of_2, .span_1_of_2 {
-        width: 80%;
+        width: 75%;
         text-align: center;
         /*border: solid 1px black;*/
     }
@@ -169,10 +172,7 @@ footer {
     #temp {clear: both}
     #alerts {width: 80%}
     .section {
-        width: 98%;
+        width: 93%;
         /*margin: 0 auto;*/
     }
-}
-.line {
-    display: none;
 }
