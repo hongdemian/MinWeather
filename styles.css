@@ -131,6 +131,7 @@ footer {
     * {
         font-size: small;
     }
+	#summary_air_quality, #forecast_air_quality, #current_air_quality {display: none;}
     .section {
         width:70%;
     }
@@ -138,10 +139,14 @@ footer {
     .span_2_of_2 {width:40%}
 }
 
+
 @media only screen and (min-width: 500px) and (max-width: 850px) {
     #temp, #summary_temp, #forecast_temp {
         font-size: 3em;
     }
+	#summary_long_name, #forecast_long_name, #current_long_name {
+		display: none;
+	}
     .span_1_of_2 {width: 40%}
 }
 /*  GO FULL WIDTH AT LESS THAN 480 PIXELS */

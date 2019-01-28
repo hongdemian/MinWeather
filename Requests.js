@@ -235,31 +235,45 @@ const updateAirQual = () => {
 	let color = "#" + airQual.color;
 	const airquality = document.getElementById('current_air_quality');
 	const current_aqi = document.getElementById('current_aqi');
+
+	const current_long_name = document.getElementById('current_long_name');
+	let current_long = airQual.pollutants[airQualTypes.indexOf(airQual.dominant)]['name'];
+	current_long += " -> " + airQual.pollutants[airQualTypes.indexOf(airQual.dominant)]['valueUGM3'] + " g/m^3";
+
 	airquality.innerHTML = statement;
 	current_aqi.style.color = color;
 	current_aqi.innerHTML = level;
+	current_long_name.innerHTML = current_long;
 };
 const updateAirQualForecast = () => {
-	console.log(airQualForecast);
 	let summary_level = airQualForecast['1'].category.toLocaleUpperCase() + " AQI: " + airQualForecast['1'].aqi;
 	let summary_statement = " ( " + airQualForecast['1'].dominant + " @ " +
 		airQualForecast['1'].pollutants[airQualTypes.indexOf(airQualForecast['1'].dominant)]['valueUGM3'] + "g/m^3)";
 	let summary_color = "#" + airQualForecast['1'].color;
 	const summary_airquality = document.getElementById('summary_air_quality');
 	const summary_aqi = document.getElementById('summary_aqi');
+	const summary_long_name = document.getElementById('summary_long_name');
+	// const summary_long = airQualForecast['1'].pollutants[airQualTypes.indexOf(airQualForecast['1'].dominant)]['name'];
+	let summary_long = airQualForecast['1'].pollutants[airQualTypes.indexOf(airQualForecast['1'].dominant)]['name'];
+	summary_long += " -> " + airQualForecast['1'].pollutants[airQualTypes.indexOf(airQualForecast['1'].dominant)]['valueUGM3'] + " g/m^3";
 	summary_airquality.innerHTML = summary_statement;
 	summary_aqi.style.color = summary_color;
 	summary_aqi.innerHTML = summary_level;
+	summary_long_name.innerHTML = summary_long;
 	//next forecast
 	let forecast_level = airQualForecast['2'].category.toLocaleUpperCase() + " AQI: " + airQualForecast['2'].aqi;
-	let forecast_statement = " ( " + airQual.dominant + " @ " +
+	let forecast_statement = " ( " + airQualForecast['2'].dominant + " @ " +
 		airQualForecast['2'].pollutants[airQualTypes.indexOf(airQualForecast['2'].dominant)]['valueUGM3'] + "g/m^3)";
 	let forecast_color = "#" + airQualForecast['2'].color;
 	const forecast_airquality = document.getElementById('forecast_air_quality');
 	const forecast_aqi = document.getElementById('forecast_aqi');
+	const forecast_long_name = document.getElementById('forecast_long_name');
+	let forecast_long = airQualForecast['2'].pollutants[airQualTypes.indexOf(airQualForecast['2'].dominant)]['name'];
+	forecast_long += " -> " + airQualForecast['2'].pollutants[airQualTypes.indexOf(airQualForecast['2'].dominant)]['valueUGM3'] + " g/m^3";
 	forecast_airquality.innerHTML = forecast_statement;
 	forecast_aqi.style.color = forecast_color;
 	forecast_aqi.innerHTML = forecast_level;
+	forecast_long_name.innerHTML = forecast_long;
 };
 const updateLightning = () => {
 	if (lightningAlert !== null) {
