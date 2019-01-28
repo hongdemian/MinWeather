@@ -41,7 +41,7 @@ const requestAirQualForecast = () => {
 				console.log('Oh no!')
 			} else {
 				airQualForecast = json.response['0']['periods'];
-				updateAirQualForecast();
+				return updateAirQualForecast();
 			}
 		});
 };
@@ -237,7 +237,7 @@ const updateAirQual = () => {
 
 	const current_long_name = document.getElementById('current_long_name');
 	let current_long = airQual.pollutants[airQualTypes.indexOf(airQual.dominant)]['name'];
-	current_long += " -> " + airQual.pollutants[airQualTypes.indexOf(airQual.dominant)]['valueUGM3'] + " g/m^3";
+	current_long += " - " + airQual.pollutants[airQualTypes.indexOf(airQual.dominant)]['valueUGM3'] + " g/m^3";
 
 	airquality.innerHTML = statement;
 	current_aqi.style.color = color;
