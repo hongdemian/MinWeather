@@ -175,7 +175,7 @@ footer {
     #flight {float:right}
     #temp {clear: both}
     #alerts {width: 80%}
-    .section {
+    .section, .place {
         width: 93%;
         /*margin: 0 auto;*/
     }
