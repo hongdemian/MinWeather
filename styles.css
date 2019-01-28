@@ -11,7 +11,9 @@ body {
     background-attachment: fixed;
     background-repeat: no-repeat;
 }
-
+.place {
+	background-color: #243D4D77;
+}
 #place_name {
     background-color: #243D4D77;
     text-align: center;
