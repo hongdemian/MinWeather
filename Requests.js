@@ -1,9 +1,8 @@
-
 let airQual, currentConditions, forecast = {}, weatherAlert, lightningAlert, airQualForecast, airQualTypes = [];
 // console.log("api " + api);
-const CLIENT_ID = 'V0EhyX4bGWXDkmJunrbk0';
-const CLIENT_SECRET = 'Rn1IRr4nYoNgefL7Y5YZQqX2mPEi4iKIAIlGeOTZ';
-let latlon = 't2m2m2';
+const CLIENT_ID = "V0EhyX4bGWXDkmJunrbk0";
+const CLIENT_SECRET = "Rn1IRr4nYoNgefL7Y5YZQqX2mPEi4iKIAIlGeOTZ";
+let request_location = "t2m2m2";
 const locOptions = {
 	enableHighAccuracy: false,
 	timeout: 5000,
@@ -12,8 +11,8 @@ const locOptions = {
 
 const requestAirQuality = () => {
 
-	const url = 'https://api.aerisapi.com/airquality/' + latlon + '?&format=json&client_id=' +
-		CLIENT_ID + '&client_secret='+ CLIENT_SECRET;
+	const url = 'https://api.aerisapi.com/airquality/' + request_location + '?&format=json&client_id=' +
+		CLIENT_ID + '&client_secret=' + CLIENT_SECRET;
 	//console.log(url);
 	fetch(url)
 		.then(function (response) {
@@ -24,12 +23,15 @@ const requestAirQuality = () => {
 				console.log('Oh no!')
 			} else {
 				airQual = json.response['0']['periods']['0'];
-				airQualTypes = ['o3', 'pm2.5', 'co', 'no2', 'so2'];
+				airQualTypes = ['o3', 'pm2.5', 'pm10', 'co', 'no2', 'so2'];
 				updateAirQual();
 			}
-		});
+		})
+		.catch(err => {console.log(err)});
+};
 
-	const AQF = 'https://api.aerisapi.com/airquality/forecasts/' + latlon + '?client_id=' + CLIENT_ID + '&client_secret=' + CLIENT_SECRET;
+const requestAirQualForecast = () => {
+	const AQF = 'https://api.aerisapi.com/airquality/forecasts/' + request_location + '?client_id=' + CLIENT_ID + '&client_secret=' + CLIENT_SECRET;
 
 	fetch(AQF)
 		.then(function (response) {
@@ -37,18 +39,16 @@ const requestAirQuality = () => {
 		})
 		.then(function (json) {
 			if (!json.success) {
-				console.lot('Oh no!')
+				console.log('Oh no!')
 			} else {
 				airQualForecast = json.response['0']['periods'];
-				// console.log(airQualForecast);
-				updateAirQual();
+				updateAirQualForecast();
 			}
 		});
 };
-
 const requestCurrentWeather = () => {
 
-	const url = 'https://api.aerisapi.com/observations/' + latlon + '?&format=json&filter=metars&limit=1&client_id=' + CLIENT_ID + '&client_secret='+ CLIENT_SECRET;
+	const url = 'https://api.aerisapi.com/observations/' + request_location + '?&format=json&filter=metars&limit=1&client_id=' + CLIENT_ID + '&client_secret='+ CLIENT_SECRET;
 
 	fetch(url)
 		.then(function(response) {
@@ -65,7 +65,7 @@ const requestCurrentWeather = () => {
 };
 const requestForecast = () => {
 
-	const url = 'https://api.aerisapi.com/forecasts/' + latlon + '?&format=json&filter=daynight&limit=14&client_id=' + CLIENT_ID + '&client_secret='+ CLIENT_SECRET;
+	const url = 'https://api.aerisapi.com/forecasts/' + request_location + '?&format=json&filter=daynight&limit=14&client_id=' + CLIENT_ID + '&client_secret='+ CLIENT_SECRET;
 
 	fetch(url)
 		.then(function(response) {
@@ -83,7 +83,7 @@ const requestForecast = () => {
 };
 const requestHourly = () => {
 
-	const url = 'https://api.aerisapi.com/forecasts/' + latlon + '?&format=json&filter=1hr&limit=14&client_id=' + CLIENT_ID + '&client_secret=' + CLIENT_SECRET;
+	const url = 'https://api.aerisapi.com/forecasts/' + request_location + '?&format=json&filter=1hr&limit=14&client_id=' + CLIENT_ID + '&client_secret=' + CLIENT_SECRET;
 
 	fetch(url)
 		.then(function(response) {
@@ -100,7 +100,7 @@ const requestHourly = () => {
 };
 const requestAlert = () => {
 
-	const url = 'https://api.aerisapi.com/alerts/' + latlon + '?&format=json&limit=10&fields=details.name,loc,details.color,details.body,details.bodyFull,timestamps.beginsISO,timestamps.expiresISO&client_id=' + CLIENT_ID + '&client_secret='+ CLIENT_SECRET;
+	const url = 'https://api.aerisapi.com/alerts/' + request_location + '?&format=json&limit=10&fields=details.name,loc,details.color,details.body,details.bodyFull,timestamps.beginsISO,timestamps.expiresISO&client_id=' + CLIENT_ID + '&client_secret='+ CLIENT_SECRET;
 
 	fetch(url)
 		.then(function(response) {
@@ -122,7 +122,7 @@ const requestAlert = () => {
 };
 const requestLightning = () => {
 
-	const url = 'https://api.aerisapi.com/lightning/' + latlon+ '?&format=json&radius=25mi&filter=cg&limit=1&fields=id,ob,loc,recISO&client_id=' + CLIENT_ID + '&client_secret=' + CLIENT_SECRET;
+	const url = 'https://api.aerisapi.com/lightning/' + request_location+ '?&format=json&radius=25mi&filter=cg&limit=1&fields=id,ob,loc,recISO&client_id=' + CLIENT_ID + '&client_secret=' + CLIENT_SECRET;
 
 	fetch(url)
 		.then(function(response) {
@@ -141,11 +141,12 @@ const requestLightning = () => {
 };
 
 const updateCurrent = () => {
-	console.log(currentConditions);
+	// console.log(currentConditions);
 	let place = ((currentConditions.place['name'])) + ", " + ((currentConditions.place['state'])) + " (" + currentConditions.profile.elevM + " m)";
 	// console.log(place.toLocaleUpperCase());
 	document.getElementById('place_name').innerHTML = place.toLocaleUpperCase();
 	// document.getElementById('current_weather').onclick = openRadar;
+	// noinspection JSUnresolvedVariable
 	currentConditions = currentConditions.ob;
 	let statement;
 	if (currentConditions.windKPH < 4) {
@@ -166,9 +167,9 @@ const updateCurrent = () => {
 	document.getElementById('temp').innerHTML = currentConditions.tempC + " C";
 	document.getElementById('current_temp').innerHTML = "Feels like: " + currentConditions.feelslikeC + " C";
 	document.getElementById('current_humidity').innerHTML = "Humidity: " + currentConditions.humidity + " % (Dewpoint: " + currentConditions.dewpointC + " C)";
-	flightRule = currentConditions.flightRule;
+	let flightRule = currentConditions.flightRule;
 	document.getElementById('flight').style.backgroundColor = 'green';
-	if (flightRule != 'VFR') {
+	if (flightRule !== 'VFR') {
 		document.getElementById('flight').style.backgroundColor = 'red'
 	}
 	document.getElementById('flight').innerHTML = currentConditions.flightRule;
@@ -229,7 +230,7 @@ const updateForecastHourly = () => {
 
 };
 const updateAirQual = () => {
-	let level = airQual.category.toLocaleUpperCase() + " AQI: " + airQual.aqi;
+	let level = " AQI: " + airQual.aqi + " *" + airQual.category.toLocaleUpperCase() + "*";
 	let statement = " (" + airQual.dominant + " @ " + airQual.pollutants[airQualTypes.indexOf(airQual.dominant)]['valueUGM3'] + "g/m^3)";
 	let color = "#" + airQual.color;
 	const airquality = document.getElementById('current_air_quality');
@@ -237,29 +238,28 @@ const updateAirQual = () => {
 	airquality.innerHTML = statement;
 	current_aqi.style.color = color;
 	current_aqi.innerHTML = level;
-	// forecasts
-	if (airQualForecast.length > 0) {
-		let summary_level = airQualForecast['1'].category.toLocaleUpperCase() + " AQI: " + airQualForecast['1'].aqi;
-		let summary_statement = " (" + airQual.dominant + " @ " +
-			airQualForecast['1'].pollutants[airQualTypes.indexOf(airQualForecast['1'].dominant)]['valueUGM3'] + "g/m^3)";
-		let summary_color = "#" + airQualForecast['1'].color;
-		const summary_airquality = document.getElementById('summary_air_quality');
-		const summary_aqi = document.getElementById('summary_aqi');
-		summary_airquality.innerHTML = summary_statement;
-		summary_aqi.style.color = summary_color;
-		summary_aqi.innerHTML = summary_level;
-		//next forecast
-		let forecast_level = airQualForecast['2'].category.toLocaleUpperCase() + " AQI: " + airQualForecast['2'].aqi;
-		let forecast_statement = " (" + airQual.dominant + " @ " +
-			airQualForecast['2'].pollutants[airQualTypes.indexOf(airQualForecast['2'].dominant)]['valueUGM3'] + "g/m^3)";
-		let forecast_color = "#" + airQualForecast['2'].color;
-		const forecast_airquality = document.getElementById('forecast_air_quality');
-		const forecast_aqi = document.getElementById('forecast_aqi');
-		forecast_airquality.innerHTML = forecast_statement;
-		forecast_aqi.style.color = forecast_color;
-		forecast_aqi.innerHTML = forecast_level;
-	}
-
+};
+const updateAirQualForecast = () => {
+	console.log(airQualForecast);
+	let summary_level = airQualForecast['1'].category.toLocaleUpperCase() + " AQI: " + airQualForecast['1'].aqi;
+	let summary_statement = " ( " + airQualForecast['1'].dominant + " @ " +
+		airQualForecast['1'].pollutants[airQualTypes.indexOf(airQualForecast['1'].dominant)]['valueUGM3'] + "g/m^3)";
+	let summary_color = "#" + airQualForecast['1'].color;
+	const summary_airquality = document.getElementById('summary_air_quality');
+	const summary_aqi = document.getElementById('summary_aqi');
+	summary_airquality.innerHTML = summary_statement;
+	summary_aqi.style.color = summary_color;
+	summary_aqi.innerHTML = summary_level;
+	//next forecast
+	let forecast_level = airQualForecast['2'].category.toLocaleUpperCase() + " AQI: " + airQualForecast['2'].aqi;
+	let forecast_statement = " ( " + airQual.dominant + " @ " +
+		airQualForecast['2'].pollutants[airQualTypes.indexOf(airQualForecast['2'].dominant)]['valueUGM3'] + "g/m^3)";
+	let forecast_color = "#" + airQualForecast['2'].color;
+	const forecast_airquality = document.getElementById('forecast_air_quality');
+	const forecast_aqi = document.getElementById('forecast_aqi');
+	forecast_airquality.innerHTML = forecast_statement;
+	forecast_aqi.style.color = forecast_color;
+	forecast_aqi.innerHTML = forecast_level;
 };
 const updateLightning = () => {
 	if (lightningAlert !== null) {
@@ -277,13 +277,16 @@ const updateWeatherAlert = () => {
 };
 
 const sendRequest = (pos) => {
-	latlon = 't2m2m2';
+	// request_location = 't2m2m2';
 	if (pos) {
 		// console.log(pos);
-		latlon = [pos.coords.latitude, pos.coords.longitude];
-		// console.log(latlon);
+		request_location = [pos.coords.latitude, pos.coords.longitude];
+		// console.log(request_location);
+	} else {
+		request_location = 'Calgary, Ab';
 	}
 	requestAirQuality();
+	requestAirQualForecast();
 	requestCurrentWeather();
 	requestForecast();
 	// requestHourly();
@@ -291,16 +294,24 @@ const sendRequest = (pos) => {
 	requestLightning();
 };
 
-navigator.geolocation.getCurrentPosition(sendRequest, error, locOptions);
+if (!navigator.geolocation) {
+	console.log("Geolocation not supported");
+	sendRequest();
+} else {
+	navigator.geolocation.getCurrentPosition(sendRequest, error, locOptions);
+}
+
 function error(err) {
 	console.warn(`ERROR(${err.code}): ${err.message}`);
-	latlon = 't2m2m2';
+	// request_location = 't2m2m2';
 	sendRequest();
 }
 //sendRequest();
 
  openRadar = () => {
-	aeris.map().layers('flat,radar,counties,admin').center('calgary, ab').zoom(9).size(500, 300).get().then((result) => {
+	// noinspection JSUnresolvedFunction
+	 // noinspection JSUnresolvedFunction
+	 aeris.map().layers('flat,radar,counties,admin').center('calgary, ab').zoom(9).size(500, 300).get().then((result) => {
 		// append result image to a DOM target
 		alert(result.image);
 })};
@@ -315,7 +326,7 @@ $(document).ready(function() {
 	/* Every time the window is scrolled ... */
 	$(window).scroll( function(){
 
-		/* Check the location of each desired element */
+		/* Check the request_location of each desired element */
 		$('.hidden').each( function(i){
 
 			let bottom_of_object = $(this).position().top + $(this).outerHeight();

@@ -18,11 +18,10 @@ body {
     width: 50%;
     margin: 5% auto 0;
     padding: 4px 0;
-
 }
 
 .hidden {
-    opacity: .5;
+    opacity: 1;
 }
 
 .col p {
@@ -101,9 +100,9 @@ footer {
     margin-bottom: 100px;
 }
 .line{
-    height: 7em;
-    margin-top: 20px;
-    padding: 25px 5px;
+    height: 80%;
+    margin: auto 0;
+    /*padding: 25px 5px;*/
     border-right: solid 2px dimgrey;
     float: left;
 }
@@ -145,12 +144,9 @@ footer {
     }
     .span_1_of_2 {width: 40%}
 }
-    #alerts {
-        width:93%;
-    }
 /*  GO FULL WIDTH AT LESS THAN 480 PIXELS */
 
-@media only screen and (max-width: 800px) {
+@media only screen and (max-width: 500px) {
     .col {
         margin: 1% auto 1% auto;
         float: unset;
@@ -160,8 +156,8 @@ footer {
 	}
 }
 
-@media only screen and (max-width: 800px) {
-    .span_2_of_2, .span_1_of_2 {
+@media only screen and (max-width: 500px) {
+    .span_2_of_2, .span_1_of_2, #alerts {
         width: 75%;
         text-align: center;
         /*border: solid 1px black;*/
