@@ -167,7 +167,9 @@ footer {
         text-align: center;
         /*border: solid 1px black;*/
     }
-
+	#summary_long_name, #forecast_long_name, #current_long_name {
+		display: none;
+	}
     #uv {float:left}
     #flight {float:right}
     #temp {clear: both}

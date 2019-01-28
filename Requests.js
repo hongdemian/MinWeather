@@ -114,7 +114,7 @@ const requestAlert = () => {
 					updateWeatherAlert();
 
 			} else {
-				document.getElementById('weather_alert').style.visibility = 'hidden';
+				document.getElementById('weather_alert').style.display = 'none';
 				document.getElementById(('alerts')).style.backgroundColor = 'initial';
 			}
 
@@ -244,6 +244,7 @@ const updateAirQual = () => {
 	current_aqi.style.color = color;
 	current_aqi.innerHTML = level;
 	current_long_name.innerHTML = current_long;
+
 };
 const updateAirQualForecast = () => {
 	let summary_level = airQualForecast['1'].category.toLocaleUpperCase() + " AQI: " + airQualForecast['1'].aqi;
@@ -274,6 +275,7 @@ const updateAirQualForecast = () => {
 	forecast_aqi.style.color = forecast_color;
 	forecast_aqi.innerHTML = forecast_level;
 	forecast_long_name.innerHTML = forecast_long;
+
 };
 const updateLightning = () => {
 	if (lightningAlert !== null) {
