@@ -174,7 +174,7 @@ const updateCurrent = () => {
 	document.getElementById('flight').innerHTML = currentConditions.flightRule;
 	document.getElementById('uv').innerHTML = "Solar: " + currentConditions.solradWM2 + "W/m^2";
 	document.getElementById('current_precip').innerHTML = "Precipitation: " +
-		(currentConditions.precipMM !== null ? (currentConditions.precipMM + " mm") : "None");
+		(currentConditions['precipMM'] !== null ? (currentConditions.precipMM + " mm") : "None");
 };
 const updateForecast = () => {
 	let forecast_heading, temp, second_forecast, second_high_low, forecast_temp;
