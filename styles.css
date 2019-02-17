@@ -144,7 +144,7 @@ footer {
 
 @media only screen and (min-width: 500px) and (max-width: 850px) {
     #temp, #summary_temp, #forecast_temp {
-        font-size: 3em;
+        font-size: 2.5em;
     }
 	#summary_long_name, #forecast_long_name, #current_long_name {
 		display: none;
@@ -153,19 +153,18 @@ footer {
 }
 /*  GO FULL WIDTH AT LESS THAN 480 PIXELS */
 
+
 @media only screen and (max-width: 500px) {
     .col {
         margin: 1% auto 1% auto;
         float: unset;
     }
+    #place_name{ width: 100% }
 	.line {
 		display: none;
 	}
-}
-
-@media only screen and (max-width: 500px) {
     .span_2_of_2, .span_1_of_2, #alerts, #place_name {
-        width: 75%;
+        width: 80%;
         text-align: center;
         /*border: solid 1px black;*/
     }
