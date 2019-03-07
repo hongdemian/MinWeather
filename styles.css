@@ -143,7 +143,7 @@ footer {
     .section, .place {
         width:70%;
     }
-    .span_1_of_2 {width:30%}
+    /*.span_1_of_2 {width:30%}*/
     .span_2_of_2 {width:40%}
 }
 
