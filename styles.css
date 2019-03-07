@@ -1,7 +1,9 @@
-* {
+html {
     font-family: ubuntu, sans-serif;
-    font-size: 20px;
+    font-size: 16px;
     color: #FBA728;
+    margin: 0;
+    padding: 0;
 }
 body {
     height: 100vh;
@@ -9,16 +11,18 @@ body {
     background-size: cover;
     background-position: top;
     background-attachment: fixed;
-    background-repeat: no-repeat;
 }
 .place {
 	background-color: #243D4D77;
+    border-radius: 3px;
+    box-shadow: .8rem .8rem .9rem #fba72833;
 }
 #place_name, .place {
     text-align: center;
     width: 50%;
     margin: 0 auto;
     padding: 4px 0;
+    
 }
 
 .hidden {
@@ -49,9 +53,10 @@ body {
 
 .heading h2{
     width:50%;
-    margin: 50px auto 0;
+    margin: 0 auto;
+    padding-top: .75rem;
     text-align: center;
-    font-size: 1.5em;
+    font-size: 2rem;
     font-weight: bold;
 }
 /*  SECTIONS  */
@@ -60,9 +65,10 @@ body {
     height: max-content;
     clear: both;
     padding: 0;
-    margin: 0 auto;
-
-    background-color: #243D4D77;
+    margin: 2.5rem auto;
+    -webkit-border-radius: 5px;-moz-border-radius: 3px;border-radius: 3px;
+    background-color: #243D4D88;
+    box-shadow: .8rem .8rem .9rem #fba72833;
 }
 .section:first-child {
     margin-top: 0;
@@ -155,6 +161,7 @@ footer {
 
 
 @media only screen and (max-width: 500px) {
+    html {font-size: 12px}
     .col {
         margin: 1% auto 1% auto;
         float: unset;
@@ -177,7 +184,7 @@ footer {
     #alerts {width: 80%}
     .section, .place {
         width: 93%;
-        margin: 0 auto;
+        /*margin: 0 auto;*/
     }
 
     .hidden { opacity: 1 }
