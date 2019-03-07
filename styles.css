@@ -4,10 +4,10 @@
     color: #FBA728;
 }
 body {
-    height: 100%;
+    height: 100vh;
     background-image: url('./resources/pexels-photo-417192.jpeg');
-    background-size: auto 100%;
-    background-position: center center;
+    background-size: cover;
+    background-position: top;
     background-attachment: fixed;
     background-repeat: no-repeat;
 }

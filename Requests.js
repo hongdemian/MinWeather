@@ -1,7 +1,7 @@
 let airQual, currentConditions, forecast = {}, weatherAlert, lightningAlert, airQualForecast, airQualTypes = [];
 // console.log("api " + api);
 const CLIENT_ID = "V0EhyX4bGWXDkmJunrbk0";
-const CLIENT_SECRET = "Rn1IRr4nYoNgefL7Y5YZQqX2mPEi4iKIAIlGeOTZ";
+const CLIENT_SECRET = "EAXn7J5gMp0FGXOCjmUuYRI1ZheSmvnHThl9spAd";
 let request_location = "t2m2m2";
 const locOptions = {
 	enableHighAccuracy: false,
