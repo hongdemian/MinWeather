@@ -23,8 +23,11 @@ body {
     width: 50%;
     margin: 0 auto;
     padding: 4px 0;
-    
 }
+
+#place_name {
+    margin: 50px auto;
+    }
 
 .hidden {
     opacity: 1;
