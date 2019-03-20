@@ -21,7 +21,7 @@ body {
 #place_name, .place {
     text-align: center;
     width: 50%;
-    margin: 0 auto;
+    margin: auto;
     padding: 4px 0;
 }
 
