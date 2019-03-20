@@ -13,15 +13,14 @@ body {
     background-attachment: fixed;
 }
 .place {
-    margin-top: 20px;
-	background-color: #243D4D77;
+    margin-top: 50px;
+	  background-color: #243D4D77;
     border-radius: 3px;
     box-shadow: .8rem .8rem .9rem #fba72833;
 }
 #place_name, .place {
     text-align: center;
     width: 50%;
-    margin: auto;
     padding: 4px 0;
 }
 
