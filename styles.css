@@ -13,6 +13,7 @@ body {
     background-attachment: fixed;
 }
 .place {
+    margin-top: 20px;
 	background-color: #243D4D77;
     border-radius: 3px;
     box-shadow: .8rem .8rem .9rem #fba72833;
