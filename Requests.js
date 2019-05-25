@@ -173,7 +173,7 @@ const updateCurrent = () => {
 	}
 	document.getElementById('flight').innerHTML = currentConditions.flightRule;
 	document.getElementById('uv').innerHTML = "Solar: " + currentConditions.solradWM2 + "W/m^2";
-	console.log('current/precip: '+ currentConditions.precipMM);
+	console.log('current/precip: '+ currentConditions.precipMM ? currentConditions.precipMM : "Null");
 	document.getElementById('current_precip').innerHTML = "Precipitation: " +
 		(currentConditions.precipMM !== null ? (currentConditions.precipMM + " mm") : "None");
 };
