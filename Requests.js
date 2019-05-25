@@ -1,7 +1,7 @@
 let airQual, currentConditions, forecast = {}, weatherAlert, lightningAlert, airQualForecast, airQualTypes = [];
 // console.log("api " + api);
 const CLIENT_ID = "V0EhyX4bGWXDkmJunrbk0";
-const CLIENT_SECRET = "EAXn7J5gMp0FGXOCjmUuYRI1ZheSmvnHThl9spAd";
+const CLIENT_SECRET = "Rn1IRr4nYoNgefL7Y5YZQqX2mPEi4iKIAIlGeOTZ";
 let request_location = "t2m2m2";
 const locOptions = {
 	enableHighAccuracy: false,
@@ -173,9 +173,9 @@ const updateCurrent = () => {
 	}
 	document.getElementById('flight').innerHTML = currentConditions.flightRule;
 	document.getElementById('uv').innerHTML = "Solar: " + currentConditions.solradWM2 + "W/m^2";
-	console.log('current/precip: '+ currentConditions['precipMM']);
+	console.log('current/precip: '+ currentConditions[precipMM]);
 	document.getElementById('current_precip').innerHTML = "Precipitation: " +
-		(currentConditions['precipMM'] !== null ? (currentConditions['precipMM'] + " mm") : "None");
+		(currentConditions[precipMM] !== null ? (currentConditions[precipMM] + " mm") : "None");
 };
 const updateForecast = () => {
 	let forecast_heading, temp, second_forecast, second_high_low, forecast_temp;
@@ -208,7 +208,7 @@ const updateForecast = () => {
 	wind_max.innerHTML = forecast.dayNight['0']['windSpeedMax80mKPH'] + " Km/h @ 80m ("
 		+ forecast.dayNight['0']['windDirMax80m'] + ")";
 	pop.innerHTML = "POP: " + forecast.dayNight['0']['pop'] + "% " + "Cover: " + forecast.dayNight['0']['sky'] + "%";
-	console.log("precip/forecast: " + (forecast.dayNight['0']['precipMM']));
+	// console.log("precip/forecast: " + (forecast.dayNight['0']['precipMM']));
 	precip.innerHTML = "Precipitation: " + (((forecast.dayNight['0']['precipMM']) !== '0') ? (forecast.dayNight['0']['precipMM'] + " mm") : "None");
 	//second period
 	document.getElementById('forecast_temp').innerHTML = forecast_temp;
@@ -251,7 +251,7 @@ const updateAirQualForecast = () => {
 	let summary_level = airQualForecast['1'].category.toLocaleUpperCase() + " AQI: " + airQualForecast['1'].aqi;
 	const def = airQualForecast['1'].pollutants[airQualTypes.indexOf(airQualForecast['1'].dominant)];
 	if (def === undefined) { return; }
-	console.log(airQualForecast['1'].pollutants[airQualTypes.indexOf(airQualForecast['1'].dominant)]);
+	// console.log(airQualForecast['1'].pollutants[airQualTypes.indexOf(airQualForecast['1'].dominant)]);
 	let summary_statement = " ( " + airQualForecast['1'].dominant + " @ " +
 		airQualForecast['1'].pollutants[airQualTypes.indexOf(airQualForecast['1'].dominant)]['valueUGM3'] + "g/m^3)";
 	let summary_color = "#" + airQualForecast['1'].color;

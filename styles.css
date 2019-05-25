@@ -6,7 +6,7 @@ html {
     padding: 0;
 }
 body {
-    height: 100vh;
+    min-height: 100vh;
     background-image: url('./resources/pexels-photo-417192.jpeg');
     background-size: cover;
     background-position: top;
