@@ -35,14 +35,13 @@ body {
     margin: 0;
 }
 #alerts {
-    padding: 3px;
-    text-align: center;
-    width: 15%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 70%;
     margin: 15px auto 10px auto;
     background-color: #243D4D77;
 }
-
-#alerts p {margin-bottom: 5px}
 
 #temp, #summary_temp, #forecast_temp {
     clear: both;
@@ -79,7 +78,10 @@ body {
     font-size: 1.3em;
     font-weight: bolder;
 }
-#weather_alert {text-align: center}
+#weather_alert {
+    flex: 0 1 50%;
+    text-align: center;
+    }
 
 #flight {
     float: right;

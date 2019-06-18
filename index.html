@@ -4,21 +4,21 @@
     <meta charset="UTF-8">
     <title>Weather</title>
 <!--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>-->
-    <script src="Requests.js"></script>
+    
     <link rel="stylesheet" href="styles.css">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
 </head>
 <body>
 
-<div class="place">
+<section class="place">
     <h1 id="place_name"></h1>
-</div>
-<div id="alerts">
+</section>
+<section id="alerts">
     <p id="weather_alert">Alerts</p>
     <p id="lightning_alert"></p>
-</div>
-<div id="current_weather" class="section group main">
+</section>
+<section id="current_weather" class="section group main">
     <div class="heading"><h2 id="current">Current Observation:</h2></div>
     <div class="col span_1_of_2">
 
@@ -41,10 +41,10 @@
 	    <p id="current_long_name"></p>
     </div>
 
-</div>
+</section>
 
 
-<div class="forecast_summary section group hidden">
+<section class="forecast_summary section group hidden">
     <div class="heading hidden"><h2 id="next_forecast">--</h2></div>
     <div class="col span_1_of_2">
         <p id="high_low"></p>
@@ -62,9 +62,9 @@
         <p id="summary_air_quality"></p>
 	    <p id="summary_long_name"></p>
     </div>
-</div>
+</section>
 
-<div class="second_summary section group hidden">
+<section class="second_summary section group hidden">
     <div class="heading hidden">
         <h2 id="second_forecast">--</h2>
     </div>
@@ -84,7 +84,7 @@
         <p id="forecast_air_quality"></p>
 		<p id="forecast_long_name"></p>
     </div>
-</div>
+</section>
 
 <div id="map_target">
 
@@ -92,7 +92,17 @@
 <footer>
 
 </footer>
+<script src="Requests.js"></script>
 <script src="https://d3js.org/d3.v5.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pulltorefreshjs/0.1.17/index.umd.js"></script>
+<script>
+    PullToRefresh.init({
+        mainElement: 'body',
+        onRefresh: function () {
+            alert('refresh')
+        }
+    });
+</script>
 </body>
 
 </html>
